@@ -21,6 +21,7 @@ public class LocationTrackingService extends Service
 
     public static final int LOCATION_UPDATE_INTERVAL_MS = 300000;
     public static final int FASTEST_LOCATION_UPDATE_INTERVAL_MS = 60000;
+    public static final int ACCURACY_THRESHOLD = 200;
 
     private DatabaseReference _userReference;
 
@@ -104,17 +105,20 @@ public class LocationTrackingService extends Service
 
     private void updateUserLocation(final Location location)
     {
-        Map map = new HashMap()
+        if(location.getAccuracy() < ACCURACY_THRESHOLD)
         {
+            Map map = new HashMap()
             {
-                put("lat", location.getLatitude());
-                put("lon", location.getLongitude());
-                put("timeStamp", location.getTime());
-                put("accuracy", location.getAccuracy());
-            }
-        };
-        _userReference.child("location")
-                .updateChildren(map);
+                {
+                    put("lat", location.getLatitude());
+                    put("lon", location.getLongitude());
+                    put("timeStamp", location.getTime());
+                    put("accuracy", location.getAccuracy());
+                }
+            };
+            _userReference.child("location")
+                    .updateChildren(map);
+        }
     }
 
 
