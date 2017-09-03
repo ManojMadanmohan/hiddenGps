@@ -54,7 +54,7 @@ public class Utils
         return getFirstAvlValue("rand"+rand, getUserPhone(context), getUserEmail(context), getUserPhoneInfo());
     }
 
-    private static String getFirstAvlValue(String defaultVal,, String ...possibleValues)
+    private static String getFirstAvlValue(String defaultVal, String ...possibleValues)
     {
         for(String s: possibleValues)
         {
