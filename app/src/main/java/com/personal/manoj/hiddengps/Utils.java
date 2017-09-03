@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import java.util.UUID;
@@ -16,6 +17,7 @@ public class Utils
     {
         TelephonyManager tMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
         String phoneNumber = tMgr.getLine1Number();
+        Log.d("Utils", "phone  = " + phoneNumber);
         return phoneNumber;
     }
 
