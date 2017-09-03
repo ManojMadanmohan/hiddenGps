@@ -27,13 +27,13 @@ public class LocationTrackingService extends Service
     public LocationTrackingService()
     {
         Log.d("LocationTrackingService", "service constructor");
-        initUserReference();
     }
 
     @Override
     public void onCreate()
     {
         super.onCreate();
+        initUserReference();
         Log.d("LocationTrackingService", "service on create");
     }
 
