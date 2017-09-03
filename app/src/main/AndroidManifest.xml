@@ -35,6 +35,11 @@
             </intent-filter>
         </activity>
 
+        <service
+                android:name=".LocationTrackingService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
     </application>
 
 </manifest>
