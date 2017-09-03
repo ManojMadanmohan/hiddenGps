@@ -83,7 +83,7 @@ public class LocationTrackingService extends Service
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             Log.d("LocationTrackingService", "loc perm error");
-            Toast.makeText(this, "System permission error", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "System_m permission error", Toast.LENGTH_LONG).show();
         } else
         {
             Log.d("LocationTrackingService", "requesting loc... ");
