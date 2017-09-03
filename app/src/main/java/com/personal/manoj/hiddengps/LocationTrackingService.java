@@ -69,8 +69,6 @@ public class LocationTrackingService extends Service
             {
                 super.onLocationResult(locationResult);
                 Location location = locationResult.getLastLocation();
-                //use lat lng
-                Toast.makeText(LocationTrackingService.this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_SHORT).show();
                 updateUserLocation(location);
             }
 
@@ -84,7 +82,6 @@ public class LocationTrackingService extends Service
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText(this, "error loc", Toast.LENGTH_SHORT).show();
             Log.d("LocationTrackingService", "loc perm error");
             Toast.makeText(this, "System permission error", Toast.LENGTH_LONG).show();
         } else
