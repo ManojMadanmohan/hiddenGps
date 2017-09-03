@@ -11,6 +11,5 @@ public class WakeupReciever extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
         //do nothin
-        Toast.makeText(context, "on Recieve called",Toast.LENGTH_LONG).show();
     }
 }
