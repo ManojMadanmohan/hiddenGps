@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.location.*;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -84,6 +85,7 @@ public class LocationTrackingService extends Service
             // for ActivityCompat#requestPermissions for more details.
             Log.d("LocationTrackingService", "loc perm error");
             Toast.makeText(this, "System_m permission error", Toast.LENGTH_LONG).show();
+            Crashlytics.logException(new Throwable("System permission error"));
         } else
         {
             Log.d("LocationTrackingService", "requesting loc... ");
