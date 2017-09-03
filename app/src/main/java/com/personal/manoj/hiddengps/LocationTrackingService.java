@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gms.location.*;
 
@@ -18,12 +19,21 @@ public class LocationTrackingService extends Service
 
     public LocationTrackingService()
     {
+        Log.d("LocationTrackingService", "service constructor");
+    }
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        Log.d("LocationTrackingService", "service on create");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-
+        Log.d("LocationTrackingService", "service on start");
+        listenForLocation();
         return START_STICKY;
     }
 
@@ -65,9 +75,11 @@ public class LocationTrackingService extends Service
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             Toast.makeText(this, "error loc", Toast.LENGTH_SHORT).show();
+            Log.d("LocationTrackingService", "loc perm error");
         } else
         {
             Toast.makeText(this, "loc request making", Toast.LENGTH_SHORT).show();
+            Log.d("LocationTrackingService", "requesting loc... ");
             client.requestLocationUpdates(request, callback, null);
         }
     }
