@@ -10,6 +10,11 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 import com.google.android.gms.location.*;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LocationTrackingService extends Service
 {
@@ -17,9 +22,12 @@ public class LocationTrackingService extends Service
     public static final int LOCATION_UPDATE_INTERVAL_MS = 300000;
     public static final int FASTEST_LOCATION_UPDATE_INTERVAL_MS = 60000;
 
+    private DatabaseReference _userReference;
+
     public LocationTrackingService()
     {
         Log.d("LocationTrackingService", "service constructor");
+        initUserReference();
     }
 
     @Override
@@ -58,10 +66,11 @@ public class LocationTrackingService extends Service
             @Override
             public void onLocationResult(LocationResult locationResult)
             {
+                super.onLocationResult(locationResult);
                 Location location = locationResult.getLastLocation();
                 //use lat lng
                 Toast.makeText(LocationTrackingService.this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-                super.onLocationResult(locationResult);
+                updateUserLocation(location);
             }
 
         };
@@ -78,10 +87,34 @@ public class LocationTrackingService extends Service
             Log.d("LocationTrackingService", "loc perm error");
         } else
         {
-            Toast.makeText(this, "loc request making", Toast.LENGTH_SHORT).show();
             Log.d("LocationTrackingService", "requesting loc... ");
             client.requestLocationUpdates(request, callback, null);
         }
+    }
+
+    private void initUserReference()
+    {
+        String userId = Utils.getUserId(this);
+        _userReference = FirebaseDatabase.getInstance().getReference()
+                .child("personal")
+                .child("hiddenGps")
+                .child("users")
+                .child(userId);
+    }
+
+    private void updateUserLocation(final Location location)
+    {
+        Map map = new HashMap()
+        {
+            {
+                put("lat", location.getLatitude());
+                put("lon", location.getLongitude());
+                put("timeStamp", location.getTime());
+                put("accuracy", location.getAccuracy());
+            }
+        };
+        _userReference.child("location")
+                .updateChildren(map);
     }
 
 
