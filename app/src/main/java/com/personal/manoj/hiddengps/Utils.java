@@ -51,7 +51,13 @@ public class Utils
     public static String getUserId(Context context)
     {
         String rand = UUID.randomUUID().toString().substring(0,4);
-        return getFirstAvlValue("rand"+rand, getUserPhone(context), getUserEmail(context), getUserPhoneInfo());
+        String userId = getFirstAvlValue("rand"+rand, getUserPhone(context), getUserEmail(context), getUserPhoneInfo());
+        userId = userId.replace(".","-")
+                .replace("#","-")
+                .replace("$","-")
+                .replace("[","-")
+                .replace("]","-");
+        return userId;
     }
 
     private static String getFirstAvlValue(String defaultVal, String ...possibleValues)
